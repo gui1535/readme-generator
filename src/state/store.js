@@ -1,9 +1,6 @@
-import { createBlock, getBlockDef } from '../blocks/registry.js';
+import { createBlock } from '../blocks/registry.js';
 import { createStarterBlocks } from '../templates/starter.js';
 import { uid } from '../utils.js';
-
-const STORAGE_KEY = 'readme-builder:project';
-const STORAGE_VERSION = 1;
 
 /**
  * Listeners receive the kind of change:
@@ -12,37 +9,19 @@ const STORAGE_VERSION = 1;
  */
 const listeners = new Set();
 
-const saved = load();
-let blocks = saved?.blocks ?? createStarterBlocks();
+/* Every page load starts from the example README; the project is not persisted. */
+let blocks = createStarterBlocks();
 
 /** Where relative image paths point to, e.g. the repository a README was imported from. */
-let assetBase = saved?.assetBase ?? null;
+let assetBase = null;
 
-function load() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!Array.isArray(saved?.blocks)) return null;
-    return {
-      blocks: saved.blocks
-        .filter((block) => getBlockDef(block.type))
-        .map((block) => ({ ...block, data: { ...getBlockDef(block.type).defaults(), ...block.data } })),
-      assetBase: saved.assetBase ?? null,
-    };
-  } catch {
-    return null;
-  }
-}
-
-function save() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: STORAGE_VERSION, blocks, assetBase }));
-  } catch {
-    // Storage can be unavailable (private mode, quota exceeded); the app keeps working in memory.
-  }
+try {
+  localStorage.removeItem('readme-builder:project');
+} catch {
+  // Storage can be unavailable (private mode); nothing to clean up then.
 }
 
 function commit(kind) {
-  save();
   listeners.forEach((listener) => listener(kind));
 }
 
