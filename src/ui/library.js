@@ -36,5 +36,11 @@ export function mountLibrary(container) {
         el('div', { class: 'library__items' }, BLOCKS.filter((def) => def.category === category).map(renderItem)),
       ),
     ),
+    el(
+      'footer',
+      { class: 'library__footer' },
+      'Desenvolvido por ',
+      el('a', { href: 'https://github.com/gui1535', target: '_blank', rel: 'noopener noreferrer' }, '@gui1535'),
+    ),
   );
 }

@@ -298,6 +298,36 @@ textarea {
   background: var(--accent-soft);
 }
 
+.library {
+  display: flex;
+  flex-direction: column;
+}
+
+.library > * {
+  flex-shrink: 0;
+}
+
+.library__footer {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-muted);
+  background: var(--panel);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.library__footer a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.library__footer a:hover {
+  text-decoration: underline;
+}
+
 /* Editor */
 
 .editor {
@@ -1029,5 +1059,9 @@ textarea {
 
   .library__group {
     padding-bottom: 12px;
+  }
+
+  .library__footer {
+    position: static;
   }
 }
