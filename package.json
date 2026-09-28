@@ -1,0 +1,28 @@
+{
+  "name": "readme-generator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.16",
+    "gemoji": "^8.1.0",
+    "github-markdown-css": "^5.9.0",
+    "highlight.js": "^11.12.0",
+    "katex": "^0.18.9",
+    "marked": "^18.0.14",
+    "marked-alert": "^2.1.2",
+    "marked-footnote": "^1.4.0",
+    "mermaid": "^12.0.0"
+  },
+  "overrides": {
+    "lodash-es": "^4.17.24"
+  }
+}
