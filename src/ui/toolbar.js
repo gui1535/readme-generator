@@ -1,7 +1,6 @@
 import { checkReadme, countProblems } from '../markdown/check.js';
 import { generateMarkdown } from '../markdown/generate.js';
-import { getBlocks, setBlocks, subscribe } from '../state/store.js';
-import { createStarterBlocks } from '../templates/starter.js';
+import { getBlocks, subscribe } from '../state/store.js';
 import { downloadFile, el } from '../utils.js';
 import { openCheckDialog } from './check-dialog.js';
 import { icon } from './icons.js';
@@ -11,17 +10,17 @@ import { toast } from './toast.js';
 const CHECK_DELAY = 400;
 const GITHUB_PROFILE = 'https://github.com/gui1535';
 
-const button = (iconName, title, onClick, variant) =>
+const button = (iconName, label, title, onClick, variant) =>
   el(
     'button',
     {
       type: 'button',
-      class: variant ? `btn btn--icon btn--${variant}` : 'btn btn--icon',
+      class: variant ? `btn btn--with-icon btn--${variant}` : 'btn btn--with-icon',
       title,
-      'aria-label': title,
       onclick: onClick,
     },
     icon(iconName),
+    label,
   );
 
 export function mountToolbar(container) {
@@ -29,7 +28,9 @@ export function mountToolbar(container) {
   const download = () => downloadFile('README.md', markdown());
 
   const checkCount = el('span', { class: 'count-badge', hidden: true });
-  const checkButton = button('shieldCheck', 'Verificar compatibilidade com o GitHub', () => openCheckDialog());
+  const checkButton = button('shieldCheck', 'Verificar', 'Verificar compatibilidade com o GitHub', () =>
+    openCheckDialog(),
+  );
   checkButton.append(checkCount);
 
   let timer;
@@ -44,15 +45,9 @@ export function mountToolbar(container) {
   };
 
   container.append(
-    button('upload', 'Importar README', openImportDialog),
-    button('file', 'Carregar exemplo', () => {
-      if (confirm('Substituir o README atual pelo exemplo?')) setBlocks(createStarterBlocks());
-    }),
-    button('trash', 'Limpar tudo', () => {
-      if (confirm('Remover todos os blocos?')) setBlocks([]);
-    }),
+    button('upload', 'Importar', 'Importar um README existente', openImportDialog),
     checkButton,
-    button('copy', 'Copiar Markdown', async () => {
+    button('copy', 'Copiar', 'Copiar o Markdown', async () => {
       try {
         await navigator.clipboard.writeText(markdown());
         toast('Markdown copiado');
@@ -62,6 +57,7 @@ export function mountToolbar(container) {
     }),
     button(
       'download',
+      'Baixar',
       'Baixar README.md',
       () => {
         const { errors, warnings } = countProblems(checkReadme(getBlocks()));

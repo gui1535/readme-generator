@@ -75,8 +75,7 @@ textarea {
 .toolbar {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 6px 6px 0;
+  gap: 8px;
   overflow-x: auto;
 }
 
@@ -94,7 +93,6 @@ textarea {
 }
 
 .btn--icon {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -105,15 +103,14 @@ textarea {
   text-decoration: none;
 }
 
-.btn--icon .count-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  min-width: 14px;
-  margin: 0;
-  padding: 0 3px;
-  font-size: 10px;
-  line-height: 14px;
+.btn--with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn--with-icon .count-badge {
+  margin-left: 0;
 }
 
 /* Buttons */
